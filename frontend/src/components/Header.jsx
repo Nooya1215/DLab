@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import LoginSign from './LoginSign';
 import "../assets/css/Header.css";
 
@@ -59,7 +60,7 @@ export default function Header() {
     <>
       <header id="header">
         <div className="wrap">
-          <h1>Logo</h1>
+          <Link to="/" className="logo font-left">DLab</Link>
           {isLoggedIn ? (
             <button onClick={handleLogout}>Logout</button>
           ) : (

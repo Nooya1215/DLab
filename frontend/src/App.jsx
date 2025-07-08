@@ -7,9 +7,13 @@ import './App.css';
 export default function App() {
   return (
     <BrowserRouter>
-      <Header />
-      <AppRouter />
-      <Footer />
+      <div className="app-layout">
+        <Header />
+        <main className="main-content">
+          <AppRouter />
+        </main>
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 }

@@ -1,0 +1,76 @@
+#footer {
+  height: 144px;
+  background-color: #D9D9D9;
+  margin-top: 50px;
+}
+
+#footer .wrap{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+#footer nav {}
+
+#footer .left {}
+
+#footer .logo {
+  background-image: url(/img/dlablogo.png);
+  height: 50px;
+  width: 90px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 0;
+}
+
+#footer .middle {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+#footer .middle p {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  color: #3B3B3B;
+}
+
+#footer .middle p a {
+  text-decoration: underline;
+  color: #3B3B3B !important;
+}
+
+#footer .right {}
+
+#footer .right ul {
+  display: flex;
+  gap: 20px;
+}
+
+#footer .right ul li {}
+
+#footer .github a {
+  background-image: url(/img/github.png);
+}
+
+#footer .notion a {
+  background-image: url(/img/notion.png);
+}
+
+#footer .figma a {
+  background-image: url(/img/figma.png);
+}
+
+#footer .right ul li a {
+  width: 40px;
+  height: 40px;
+  display: block;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
