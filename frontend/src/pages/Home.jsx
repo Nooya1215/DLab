@@ -1,6 +1,6 @@
 import Card from '../components/Card';
 import cardData from '../data/cards.json';
-import "../assets/css/home.css";
+import "../assets/css/Home.css";
 
 export default function Home() {
   return (
