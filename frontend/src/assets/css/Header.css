@@ -3,7 +3,8 @@
 }
 
 #header .wrap {
-  
+  display: flex;
+  justify-content: space-between;
 }
 
 #header .wrap h1 {
