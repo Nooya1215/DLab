@@ -68,10 +68,11 @@ if (cluster.isPrimary) {
             userid,
             email,
             password: hashedPassword,
+            role: 'user', // ✅ 기본 역할 추가
           });
 
           res.json({ message: '회원가입 성공' });
-        } catch (error) {
+        } catch {
           res.status(500).json({ message: '서버 오류' });
         }
       });
@@ -79,8 +80,13 @@ if (cluster.isPrimary) {
       // 로그인
       app.post('/api/login', async (req, res) => {
         const { useridOrEmail, password } = req.body;
+
         if (!useridOrEmail || !password) {
-          return res.status(400).json({ success: false, code: 'fillAllFields' });
+          return res.status(400).json({
+            success: false,
+            code: 'fillAllFields',
+            message: '아이디(이메일)와 비밀번호를 모두 입력해주세요.'
+          });
         }
 
         try {
@@ -91,16 +97,31 @@ if (cluster.isPrimary) {
 
           const user = await usersCollection.findOne(query);
           if (!user) {
-            return res.status(401).json({ success: false, code: 'userNotFound' });
+            return res.status(401).json({
+              success: false,
+              code: 'userNotFound',
+              message: '사용자를 찾을 수 없습니다.'
+            });
           }
 
           const match = await bcrypt.compare(password, user.password);
           if (!match) {
-            return res.status(401).json({ success: false, code: 'wrongPassword' });
+            return res.status(401).json({
+              success: false,
+              code: 'wrongPassword',
+              message: '비밀번호가 틀렸습니다.'
+            });
           }
 
+          const userRole = user.role || 'user';
+          const isAdmin = userRole === 'admin';
+
           const token = jwt.sign(
-            { userid: user.userid, id: user._id.toString() },
+            {
+              userid: user.userid,
+              id: user._id.toString(),
+              role: userRole
+            },
             process.env.JWT_SECRET,
             { expiresIn: '1d' }
           );
@@ -113,9 +134,20 @@ if (cluster.isPrimary) {
             path: '/',
           });
 
-          res.json({ success: true, code: 'loginSuccess' });
+          res.json({
+            success: true,
+            code: 'loginSuccess',
+            userid: user.userid,
+            role: userRole,
+            isAdmin
+          });
         } catch (error) {
-          res.status(500).json({ success: false, code: 'serverError' });
+          console.error('❌ 로그인 오류:', error);
+          res.status(500).json({
+            success: false,
+            code: 'serverError',
+            message: '서버 오류가 발생했습니다.'
+          });
         }
       });
 
@@ -130,7 +162,12 @@ if (cluster.isPrimary) {
           if (err) {
             return res.status(401).json({ loggedIn: false, message: '유효하지 않은 토큰입니다.' });
           }
-          res.json({ loggedIn: true, userid: decoded.userid, id: decoded.id });
+          res.json({
+            loggedIn: true,
+            userid: decoded.userid,
+            id: decoded.id,
+            role: decoded.role || 'user' // ✅ 역할 포함
+          });
         });
       });
 

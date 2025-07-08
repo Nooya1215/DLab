@@ -66,6 +66,7 @@ export default function Header() {
           ) : (
             <button onClick={openModal}>Login</button>
           )}
+          <Link to="/admin">admin</Link>
         </div>
       </header>
 

@@ -1,0 +1,171 @@
+/* #admin {
+  
+}
+
+
+#admin .wrap {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#admin .wrap h2 {
+  margin-bottom: 25px;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #222;
+  text-align: center;
+}
+
+
+#admin .wrap p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+#admin .wrap .upload-box {
+  width: 100%;
+  border: 2px dashed #999;
+  border-radius: 10px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  color: #555;
+  transition: border-color 0.3s ease;
+}
+
+
+#admin .wrap .upload-box p {
+  margin: 8px 0;
+  font-size: 1rem;
+}
+
+
+#admin .wrap input {
+  display: none;
+}
+
+
+#admin .wrap button {
+  margin-top: 25px;
+  width: 100%;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+
+#admin .wrap button:hover {
+  background-color: #0056b3;
+}
+ */
+
+
+#admin {
+  
+}
+
+#admin .wrap {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#admin .wrap h2 {
+  text-align: left;
+}
+
+#admin .wrap .top-container {
+  display: flex;
+  width: 100%;
+}
+
+#admin .wrap .top-container .upload-box {
+  width: 50%;
+  border: 2px dashed #D9D9D9;
+  border-radius: 10px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  color: #555;
+}
+
+#admin .wrap .top-container .upload-box p {
+  display: flex;
+  justify-content: center;
+}
+
+#admin .wrap .top-container .upload-box p span {
+  color: #FF2D55;
+}
+
+#admin .wrap .top-container .upload-box p p {
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#admin .wrap .top-container .upload-box input {
+  display: none;
+}
+
+#admin .wrap .top-container .type-list {
+  display: flex;
+  gap: 20px;
+}
+
+#admin .wrap .top-container .type-list li {
+
+}
+
+#admin .wrap .top-container .type-list li button {
+
+}
+
+#admin .wrap .top-container .upload-info {
+  
+}
+
+#admin .wrap .top-container .upload-info  {
+
+}
+
+#admin .wrap .top-container .upload-info li {
+
+}
+
+#admin .wrap .top-container .upload-info li button {
+
+}
+
+#admin .wrap .top-container .upload-info form {
+  display: flex;
+  flex-direction: column;
+}
+
+#admin .wrap .top-container .upload-info form input {
+
+}
+
+#admin .wrap .top-container .upload-info form textarea {
+
+}
+
+#admin .wrap .top-container .upload-info form button {
+
+}

@@ -24,6 +24,11 @@ export default function Login({ onLoginSuccess, onSwitchToSignup, onClose }) {
       const data = await res.json();
 
       if (res.ok && data.success) {
+        if (data.isAdmin) {
+          alert('관리자님 환영합니다!');
+        } else {
+          alert('로그인 성공!');
+        }
         onLoginSuccess();
       } else {
         alert(data.message || '로그인 실패: 아이디 또는 비밀번호를 확인하세요.');

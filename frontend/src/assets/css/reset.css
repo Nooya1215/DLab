@@ -69,3 +69,8 @@ span {
 input {
   background-color: #fff;
 }
+
+textarea {
+  background-color: #fff;
+  resize: none;
+}
