@@ -18,7 +18,7 @@ export default function Detailpage({ data }) {
   }
 
   return (
-    <div className="detailpage-container">
+    <div className="detailpage-container wrap">
         <img className="detail-image" src={detail.image} alt={detail.title} />
         <div className="info-box">
           <h2 className="title">{detail.title}</h2>
