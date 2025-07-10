@@ -5,6 +5,27 @@
   position: relative;
 }
 
+#card::before{
+  content: '';
+  display: block;
+  width: 26px;
+  height: 35px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-image: url(/img/bookmark-w.png);
+  z-index: 3;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: ease-in-out, 0.5s;
+  opacity: 0;
+}
+
+#card:hover::before{
+  opacity: 1;
+}
+
 #card .img-box{
   width: 345px;
   height: 440px;

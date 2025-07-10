@@ -1,6 +1,7 @@
 #home{
   height: 100%;
   min-height: 100%;
+  margin-top: 70px;
 }
 
 #home .wrap{}

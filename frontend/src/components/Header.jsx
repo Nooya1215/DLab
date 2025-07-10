@@ -45,12 +45,12 @@ export default function Header() {
       </header>
 
       {showLoginSign && (
-        <LoginSign 
+        <LoginSign
           onLoginSuccess={() => {
             closeModal();
             // 로그인 후 AppContext에서 user 정보가 갱신되어 있어야 합니다.
-          }} 
-          onClose={closeModal} 
+          }}
+          onClose={closeModal}
         />
       )}
     </>

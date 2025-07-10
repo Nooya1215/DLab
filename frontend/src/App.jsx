@@ -1,8 +1,9 @@
 import { BrowserRouter } from 'react-router-dom';
 import { AppProvider } from './components/AppContext';
 import Header from './components/Header';
-import Sidebar from './pages/Sidebar';
 import Footer from './components/Footer';
+import Sidebar from './components/Sidebar';
+import ScrollToTop from './components/ScrollToTop';
 import AppRouter from './router';
 import './App.css';
 
@@ -13,12 +14,13 @@ export default function App() {
         <div className="app-layout">
           <Header />
           <Sidebar />
+          <ScrollToTop />
           <main className="main-content">
             <AppRouter />
           </main>
           <Footer />
         </div>
-      </BrowserRouter>
+    </BrowserRouter>
     </AppProvider>
   );
 }

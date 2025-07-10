@@ -1,6 +1,8 @@
 #admin {
-  padding-top: 70px;
-  height: calc(100% - 194px);
+  height: calc(100% - 144px);
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 70px;
 }
 
 #admin .wrap {
