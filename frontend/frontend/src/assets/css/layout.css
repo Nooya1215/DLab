@@ -1,0 +1,102 @@
+/* layout style  */
+section {
+  height: 100vh;
+  min-height: 700px;
+}
+
+.wrap {
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-between {
+  justify-content: space-between;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.block {
+  display: block;
+}
+
+a {
+  display: block;
+}
+
+/* text style */
+.h1 {
+  font-size: 40px;
+}
+
+.h2 {
+  font-size: 64px;
+}
+
+.h3 {
+  font-size: 26px;
+}
+
+.h4 {
+  font-size: 18px;
+}
+
+.h5 {
+  font-size: 16px;
+}
+
+.h6 {
+  font-size: 14px;
+}
+
+.tag {
+  font-size: 12px;
+}
+
+.won {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.p {
+  font-size: 16px;
+}
+
+.menu {
+  font-size: 18px;
+}
+
+.brown{ color: #4D2E1C !important;}
+
+.hide {
+  display: none;
+}
+
+.abtn {
+  font-size: 16px;
+  color: #ccc;
+}
+
+.btn {
+  font-size: 14px !important;
+}
+
+/* 모바일 */
+@media (max-width: 480px){
+  .wrap{width: 344px;}
+}

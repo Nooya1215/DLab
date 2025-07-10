@@ -1,0 +1,29 @@
+# Node modules
+node_modules/
+
+# 환경 변수 파일
+.env
+.env.local
+.env.*.local
+
+# 로그 파일
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 빌드 결과물 (있다면)
+dist/
+build/
+
+# IDE 및 OS 파일
+.vscode/
+.idea/
+.DS_Store
+
+# PM2 로그 (사용 시)
+pm2.log
+pm2.pid
+
+# 데이터베이스 덤프/백업 (있다면)
+*.dump
+*.backup
