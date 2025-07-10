@@ -1,6 +1,7 @@
 import Card from '../components/Card';
+import Top from '../components/Top';
 import cardData from '../data/cards.json';
-import "../assets/css/Home.css";
+import "../assets/css/home.css";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
           ))}
         </div>
       </div>
+      <Top />
     </section>
   );
 }

@@ -13,6 +13,7 @@ export default function App() {
         <div className="app-layout">
           <Header />
           <Sidebar />
+          <ScrollToTop />
           <main className="main-content">
             <AppRouter />
           </main>
