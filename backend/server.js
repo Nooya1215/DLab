@@ -352,6 +352,37 @@ if (cluster.isPrimary) {
         }
       });
 
+      // courses list API
+app.get('/api/courses', async (req, res) => {
+  try {
+    const courses = await db.collection('courses').find().toArray();
+    res.json(courses);
+  } catch (err) {
+    console.error('코스 불러오기 실패:', err);
+    res.status(500).json({ message: '서버 오류' });
+  }
+});
+
+// 디테일페이지 api연결
+app.get('/api/courses/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    if (isNaN(id)) {
+      return res.status(400).json({ message: '유효하지 않은 ID입니다.' });
+    }
+
+    const course = await db.collection('courses').findOne({ id });
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+
+    res.json(course);
+  } catch (err) {
+    console.error('상세 조회 실패:', err);
+    res.status(500).json({ message: '서버 오류' });
+  }
+});
+
       app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
     } catch (err) {
       console.error('서버 시작 실패:', err);

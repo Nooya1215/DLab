@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axiosInstance from "../services/axiosInstance";
 import "../assets/css/detailpage.css";
-import cardData from '../data/cards.json';
 
 export default function Detailpage() {
   const { id } = useParams();
+  const [detail, setDetail] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const detail = cardData.find(item => item.id === Number(id));
+  useEffect(() => {
+    axiosInstance.get(`/courses/${id}`)
+      .then(res => {
+        setDetail(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("상세 데이터 불러오기 실패:", err);
+        setLoading(false);
+      });
+  }, [id]);
 
-  if (!detail) {
-    return <p>데이터를 찾을 수 없습니다.</p>;
-  }
+  if (loading) return <p>불러오는 중...</p>;
+  if (!detail) return <p>데이터를 찾을 수 없습니다.</p>;
 
   return (
     <div className="detailpage-container wrap">
