@@ -1,7 +1,7 @@
 // backend/routes/wishlist.js
 import express from 'express';
 import jwt from 'jsonwebtoken';
-// 테스트용 주석입니다.
+
 const router = express.Router();
 
 // JWT 인증 미들웨어
