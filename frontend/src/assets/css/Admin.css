@@ -224,7 +224,14 @@
 #admin .wrap .bottom-container .bottom-info .upload-list li span:nth-of-type(2) {
   width: 40%;
 }
-#admin .wrap .bottom-container .bottom-info .upload-list li button {
+#admin .wrap .bottom-container .bottom-info .upload-list li div {
+  width: 15%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#admin .wrap .bottom-container .bottom-info .upload-list li div button {
   width: 80px;
   height: 30px;
   display: flex;
@@ -234,6 +241,11 @@
   border: 1px solid #000 !important;
   border-radius: 8px;
   box-sizing: border-box;
+  transition: background-color 0.3s ease !important;
+}
+#admin .wrap .bottom-container .bottom-info .upload-list li div button:hover {
+  background-color: #000 !important;
+  color: #fff;
 }
 #admin .wrap .bottom-container .bottom-info .upload-list .empty {
   display: flex;

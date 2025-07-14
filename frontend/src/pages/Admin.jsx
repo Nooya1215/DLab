@@ -258,12 +258,14 @@ export default function Admin() {
                       {item.files.musicUrl ? "music" : item.files.photoUrls?.length > 0 ? "photo" : item.files.videoUrl ? "video" : "unknown"}
                     </span>
                     <span className="date">{formatDate(item.createdAt)}</span>
-                    <button
-                      onClick={() => handleDelete(item._id)}
-                      disabled={uploading || deletingId === item._id}
-                    >
-                      {deletingId === item._id ? "삭제중..." : "삭제"}
-                    </button>
+                    <div>
+                      <button
+                        onClick={() => handleDelete(item._id)}
+                        disabled={uploading || deletingId === item._id}
+                      >
+                        {deletingId === item._id ? "삭제중..." : "삭제"}
+                      </button>
+                    </div>
                   </li>
                 )) : (
                   <li className="row empty">업로드된 항목이 없습니다.</li>
