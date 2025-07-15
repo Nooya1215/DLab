@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useApp } from './AppContext';   // ✅ AppContext에서 가져오기
 import "../assets/css/Login.css";
 
 export default function Login({ onLoginSuccess, onSwitchToSignup, onClose }) {
   const [useridOrEmail, setUseridOrEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { setUser } = useApp();           // ✅ Context의 setUser
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,13 +19,22 @@ export default function Login({ onLoginSuccess, onSwitchToSignup, onClose }) {
       const res = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // 쿠키 전송/수신을 위해 반드시 필요
+        credentials: 'include',
         body: JSON.stringify({ useridOrEmail, password }),
       });
 
       const data = await res.json();
 
       if (res.ok && data.success) {
+        // ✅ Context 상태 업데이트
+        setUser({ userid: data.userid, role: data.role });
+
+        if (data.isAdmin) {
+          alert('관리자님 환영합니다!');
+        } else {
+          alert('로그인 성공!');
+        }
+
         onLoginSuccess();
       } else {
         alert(data.message || '로그인 실패: 아이디 또는 비밀번호를 확인하세요.');

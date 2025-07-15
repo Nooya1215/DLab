@@ -1,7 +1,8 @@
+// frontend\src\components\Sidebar.jsx
 import React from "react";
 import { Link } from "react-router-dom";
 import { useApp } from "../components/AppContext";
-import "../assets/css/sidebar.css";
+import "../assets/css/sidebar.css"
 
 export default function Sidebar() {
   const { user, loading } = useApp();

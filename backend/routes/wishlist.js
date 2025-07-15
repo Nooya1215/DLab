@@ -1,54 +1,77 @@
-// backend/routes/wishlist.js
 import express from 'express';
 import jwt from 'jsonwebtoken';
+import { ObjectId } from 'mongodb';
 
 const router = express.Router();
 
-// JWT 인증 미들웨어
-function authenticateToken(req, res, next) {
-  const token = req.cookies.token;
-  if (!token) return res.status(401).json({ message: '로그인이 필요합니다.' });
+export default function createWishlistRoutes(db) {
+  const wishlistCollection = db.collection('wishlist');
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ message: '유효하지 않은 토큰입니다.' });
-    req.user = user;
-    next();
-  });
-}
+  // 🔍 찜 목록 조회
+  router.get('/', async (req, res) => {
+    try {
+      const token = req.cookies.token;
+      if (!token) return res.status(401).json({ message: '로그인 필요' });
 
-export default function wishlistRoutes(db) {
-  const collection = db.collection('wishlist');
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const userId = decoded.id;
 
-  // 찜 추가
-  router.post('/add', authenticateToken, async (req, res) => {
-    const { courseId, title, image, price } = req.body;
-    if (!courseId || !title || !image) {
-      return res.status(400).json({ message: '필수 정보 누락' });
+      const wishlist = await wishlistCollection.find({ userId }).toArray();
+      res.json(wishlist);
+    } catch (err) {
+      console.error('찜 목록 조회 실패:', err);
+      res.status(500).json({ message: '찜 목록 조회 실패' });
     }
+  });
 
-    const userId = req.user.id;
-    const exists = await collection.findOne({ userId, courseId });
-    if (exists) {
-      return res.status(200).json({ message: '이미 찜한 콘텐츠입니다.' });
+  // ➕ 찜 추가
+  router.post('/add', async (req, res) => {
+    try {
+      const token = req.cookies.token;
+      if (!token) return res.status(401).json({ message: '로그인 필요' });
+
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const userId = decoded.id;
+      const { courseId, title, image, price } = req.body;
+
+      const exists = await wishlistCollection.findOne({ userId, courseId });
+      if (exists) {
+        return res.status(409).json({ message: '이미 찜한 콘텐츠입니다.' });
+      }
+
+      await wishlistCollection.insertOne({
+        userId,
+        courseId,
+        title,
+        image,
+        price,
+        createdAt: new Date(),
+      });
+
+      res.json({ message: '찜 추가 완료' });
+    } catch (err) {
+      console.error('찜 추가 실패:', err);
+      res.status(500).json({ message: '찜 추가 실패' });
     }
-
-    await collection.insertOne({ userId, courseId, title, image, price });
-    res.status(200).json({ message: '찜 추가 완료' });
   });
 
-  // 찜 목록 조회
-  router.get('/', authenticateToken, async (req, res) => {
-    const userId = req.user.id;
-    const items = await collection.find({ userId }).toArray();
-    res.status(200).json(items);
-  });
+  // ➖ 찜 해제
+  router.post('/remove', async (req, res) => {
+    try {
+      const token = req.cookies.token;
+      if (!token) return res.status(401).json({ message: '로그인 필요' });
 
-  // 찜 해제
-  router.post('/remove', authenticateToken, async (req, res) => {
-    const { courseId } = req.body;
-    const userId = req.user.id;
-    await collection.deleteOne({ userId, courseId });
-    res.status(200).json({ message: '찜 해제 완료' });
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const userId = decoded.id;
+      const { courseId } = req.body;
+
+      await wishlistCollection.deleteOne({ userId, courseId });
+
+      res.json({ message: '찜 해제 완료' });
+    } catch (err) {
+      console.error('찜 해제 실패:', err);
+      res.status(500).json({ message: '찜 해제 실패' });
+    }
   });
 
   return router;

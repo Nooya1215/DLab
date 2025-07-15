@@ -1,57 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from "react-router-dom";
 import LoginSign from './LoginSign';
+import { useApp } from './AppContext';  // 전역 상태에서 logout 포함 가져오기
 import "../assets/css/Header.css";
 
 export default function Header() {
+  const { user, logout, loading } = useApp();  // ✅ logout 가져오기
   const [showLoginSign, setShowLoginSign] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  // 로그인 상태 체크
-  const checkLoginStatus = async () => {
-    try {
-      const res = await fetch('/api/auth/check', {
-        credentials: 'include',
-      });
-      const data = await res.json();
-      if (res.ok && data.loggedIn) setIsLoggedIn(true);
-      else setIsLoggedIn(false);
-    } catch {
-      setIsLoggedIn(false);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    checkLoginStatus();
-  }, []);
 
   const openModal = () => setShowLoginSign(true);
   const closeModal = () => setShowLoginSign(false);
 
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-    closeModal();
-  };
-
   const handleLogout = async () => {
-    try {
-      const res = await fetch('http://localhost:5000/api/logout', {
-        method: 'POST',
-        credentials: 'include',  // 쿠키 포함 필수
-      });
-
-      if (res.ok) {
-        setIsLoggedIn(false);
-      } else {
-        console.error('로그아웃 실패:', res.statusText);
-        // 필요하면 사용자에게 알림 띄우기
-      }
-    } catch (error) {
-      console.error('로그아웃 중 오류 발생:', error);
-    }
+    await logout(); // ✅ context의 logout 함수 호출
   };
 
   if (loading) return null;
@@ -61,7 +22,7 @@ export default function Header() {
       <header id="header">
         <div className="wrap">
           <Link to="/" className="logo font-left">DLab</Link>
-          {isLoggedIn ? (
+          {user ? (
             <button onClick={handleLogout}>Logout</button>
           ) : (
             <button onClick={openModal}>Login</button>
@@ -70,7 +31,13 @@ export default function Header() {
       </header>
 
       {showLoginSign && (
-        <LoginSign onLoginSuccess={handleLoginSuccess} onClose={closeModal} />
+        <LoginSign
+          onLoginSuccess={() => {
+            closeModal();
+            // 로그인 성공 시 AppContext에서 자동 반영
+          }}
+          onClose={closeModal}
+        />
       )}
     </>
   );

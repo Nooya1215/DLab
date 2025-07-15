@@ -2,6 +2,7 @@
 section {
   height: 100vh;
   min-height: 700px;
+  margin-top: 90px;
 }
 
 .wrap {

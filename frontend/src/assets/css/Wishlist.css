@@ -1,0 +1,34 @@
+/* wishlist.css */
+
+.wishlist-page {
+  padding: 80px 40px;
+  min-height: 100vh;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.wishlist-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.wishlist-empty {
+  font-size: 1.2rem;
+  color: #666;
+  margin-top: 40px;
+}
+
+/* 카드 4개 이상 자동 줄바꿈 + 반응형 정렬 */
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 40px;
+  width: 100%;
+  max-width: 1440px;
+  justify-items: center;
+}
