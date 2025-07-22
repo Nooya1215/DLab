@@ -1,5 +1,4 @@
-// services/course.js
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
 // 코스 상세 정보 불러오기
 export async function fetchCourseById(id) {

@@ -75,7 +75,11 @@ if (cluster.isPrimary) {
       app.use(express.json());
       app.use(cookieParser());
       app.use(cors({
-        origin: 'http://localhost:5173',
+        origin: [
+          'http://localhost:5173',                  // 로컬 개발용
+          'https://dlab-y3l9.onrender.com',         // Render 배포용 도메인
+          'https://d-lab-eight.vercel.app/'   // Vercel 배포용 도메인 (필요 시)
+        ],
         credentials: true,
       }));
 

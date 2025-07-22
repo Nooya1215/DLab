@@ -6,12 +6,14 @@ import {
   addToWishlist,
   removeFromWishlist
 } from "../services/wishlist";
-import { useApp } from "../components/AppContext"; // ✅ 로그인 상태 가져오기
+import { useApp } from "../components/AppContext";
 import "../assets/css/Home.css";
+
+const API_BASE = import.meta.env.VITE_API_URL; // ✅ 환경변수 사용
 
 export default function Home() {
   const [cards, setCards] = useState([]);
-  const { user } = useApp(); // ✅ 로그인 상태 추적
+  const { user } = useApp();
 
   useEffect(() => {
     const loadCardsWithWishStatus = async () => {
@@ -19,13 +21,12 @@ export default function Home() {
         let wishedIds = [];
 
         if (user) {
-          // ✅ 찜 목록 가져오기
           const wishlist = await fetchWishlist();
           wishedIds = wishlist.map((item) => item.courseId);
         }
 
-        // ✅ 카드 목록 MongoDB에서 가져오기
-        const coursesRes = await axios.get("http://localhost:5000/api/courses");
+        // ✅ 환경변수 기반 API 주소 사용
+        const coursesRes = await axios.get(`${API_BASE}/api/courses`);
         const mongoCards = coursesRes.data;
 
         const updatedCards = mongoCards.map((card) => ({
@@ -41,7 +42,7 @@ export default function Home() {
     };
 
     loadCardsWithWishStatus();
-  }, [user]); // ✅ 로그인 상태가 바뀌면 카드 다시 로드
+  }, [user]);
 
   const handleWishClick = async (id) => {
     const target = cards.find((c) => c.id === id);

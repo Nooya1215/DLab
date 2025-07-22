@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import "../assets/css/Admin.css";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 export default function Admin() {
   const [files, setFiles] = useState({ music: null, photo: [], video: null });
   const [title, setTitle] = useState('');
@@ -8,15 +10,13 @@ export default function Admin() {
   const fileInputRef = useRef();
   const [price, setPrice] = useState('0');
   const [uploads, setUploads] = useState([]);
-
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [uploadCompleted, setUploadCompleted] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
 
-  // 업로드 리스트 불러오기
   const fetchUploads = () => {
-    fetch("http://localhost:5000/api/uploads", {
+    fetch(`${backendUrl}/api/uploads`, {
       credentials: "include",
     })
       .then(res => res.json())
@@ -39,8 +39,7 @@ export default function Admin() {
       else if (file.type.startsWith("image/")) {
         if (newFiles.photo.length < 10) newFiles.photo.push(file);
         else invalidFiles.push(file.name);
-      }
-      else if (file.type.startsWith("video/") && !newFiles.video) newFiles.video = file;
+      } else if (file.type.startsWith("video/") && !newFiles.video) newFiles.video = file;
       else invalidFiles.push(file.name);
     }
 
@@ -52,7 +51,6 @@ export default function Admin() {
     setFiles(newFiles);
   };
 
-  // 업로드
   const handleUpload = () => {
     if (!files.music && files.photo.length === 0 && !files.video) {
       alert("음악, 사진, 비디오 중 하나를 선택해주세요.");
@@ -118,12 +116,11 @@ export default function Admin() {
       }
     };
 
-    xhr.open("POST", "http://localhost:5000/api/upload", true);
+    xhr.open("POST", `${backendUrl}/api/upload`, true);
     xhr.withCredentials = true;
     xhr.send(formData);
   };
 
-  // 삭제
   const handleDelete = async (id) => {
     if (!window.confirm("정말 삭제하시겠습니까?")) return;
 
@@ -131,7 +128,7 @@ export default function Admin() {
     setUploading(true);
 
     try {
-      const res = await fetch(`http://localhost:5000/api/uploads/${id}`, {
+      const res = await fetch(`${backendUrl}/api/uploads/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -156,34 +153,17 @@ export default function Admin() {
 
   const getProxyImageUrl = (b2FilePath) => {
     if (!b2FilePath) return '';
-    return `http://localhost:5000/api/proxy/b2-thumbnail?file=${encodeURIComponent(b2FilePath)}`;
+    return `${backendUrl}/api/proxy/b2-thumbnail?file=${encodeURIComponent(b2FilePath)}`;
   };
 
   const renderThumbnail = (item) => {
-    if (item.files?.musicUrl) {
-      return <span role="img" aria-label="music">🎵</span>;
-    }
-
+    if (item.files?.musicUrl) return <span role="img" aria-label="music">🎵</span>;
     if (item.files?.photoUrls?.length > 0) {
-      return (
-        <img
-          src={getProxyImageUrl(item.files.photoUrls[0])}
-          alt={item.title}
-          crossOrigin="anonymous"
-        />
-      );
+      return <img src={getProxyImageUrl(item.files.photoUrls[0])} alt={item.title} crossOrigin="anonymous" />;
     }
-
     if (item.files?.videoThumbnailUrl) {
-      return (
-        <img
-          src={getProxyImageUrl(item.files.videoThumbnailUrl)}
-          alt={item.title}
-          crossOrigin="anonymous"
-        />
-      );
+      return <img src={getProxyImageUrl(item.files.videoThumbnailUrl)} alt={item.title} crossOrigin="anonymous" />;
     }
-
     return <span role="img" aria-label="unknown">❓</span>;
   };
 

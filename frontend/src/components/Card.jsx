@@ -4,6 +4,8 @@ import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { useApp } from './AppContext'; // 로그인 상태 확인용
 import "../assets/css/Card.css";
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 export default function Card({
   id, title, image, price, wishCount, downloads, isWished: initialIsWished, onWishClick
 }) {
@@ -25,7 +27,7 @@ export default function Card({
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/check", {
+      const res = await fetch(`${BACKEND_URL}/api/auth/check`, {
         method: "GET",
         credentials: "include",
       });

@@ -2,8 +2,10 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000/api', // ✔ API 서버 주소
-  withCredentials: true,               // ✔ 쿠키 포함
+  baseURL: process.env.REACT_APP_BACKEND_URL
+    ? `${process.env.REACT_APP_BACKEND_URL}/api`
+    : 'http://localhost:5000/api',
+  withCredentials: true,
 });
 
 export default axiosInstance;

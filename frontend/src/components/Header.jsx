@@ -4,6 +4,8 @@ import LoginSign from './LoginSign';
 import { useApp } from './AppContext';  // 전역 상태 가져오기
 import "../assets/css/Header.css";
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 export default function Header() {
   const { user, setUser, loading } = useApp();
   const [showLoginSign, setShowLoginSign] = useState(false);
@@ -13,7 +15,7 @@ export default function Header() {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/logout', {
+      const res = await fetch(`${BACKEND_URL}/api/logout`, {
         method: 'POST',
         credentials: 'include',  // 쿠키 포함 필수
       });

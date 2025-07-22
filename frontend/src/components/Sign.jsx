@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import "../assets/css/Sign.css";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 export default function Sign({ onSwitchToLogin, onClose }) {
   const [userid, setUserid] = useState('');
   const [email, setEmail] = useState('');
@@ -21,7 +23,7 @@ export default function Sign({ onSwitchToLogin, onClose }) {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/sign', {
+      const res = await fetch(`${backendUrl}/api/sign`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userid, email, password }),
@@ -36,7 +38,8 @@ export default function Sign({ onSwitchToLogin, onClose }) {
       } else {
         alert(data.message || '회원가입 실패');
       }
-    } catch {
+    } catch (err) {
+      console.error('회원가입 오류:', err);
       alert('서버 오류가 발생했습니다.');
     }
   };

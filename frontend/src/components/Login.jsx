@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { useApp } from './AppContext';   // ✅ AppContext에서 가져오기
+import { useApp } from './AppContext';
 import "../assets/css/Login.css";
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function Login({ onLoginSuccess, onSwitchToSignup, onClose }) {
   const [useridOrEmail, setUseridOrEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { setUser } = useApp();           // ✅ Context의 setUser
+  const { setUser } = useApp();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,7 +18,7 @@ export default function Login({ onLoginSuccess, onSwitchToSignup, onClose }) {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/login', {
+      const res = await fetch(`${BACKEND_URL}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -26,7 +28,6 @@ export default function Login({ onLoginSuccess, onSwitchToSignup, onClose }) {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        // ✅ Context 상태 업데이트
         setUser({ userid: data.userid, role: data.role });
 
         if (data.isAdmin) {
