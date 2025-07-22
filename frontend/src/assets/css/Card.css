@@ -5,27 +5,6 @@
   position: relative;
 }
 
-#card::before{
-  content: '';
-  display: block;
-  width: 26px;
-  height: 35px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-image: url(/img/bookmark-w.png);
-  z-index: 3;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  transition: ease-in-out, 0.5s;
-  opacity: 0;
-}
-
-#card:hover::before{
-  opacity: 1;
-}
-
 #card .img-box{
   width: 345px;
   height: 440px;
@@ -126,4 +105,27 @@
   border-radius: 0;
   color: white;
   font-size: 12px;
+}
+.wish-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 2;
+}
+.bookmark-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: white; /* 🤍 흰색으로 바꿈 */
+  z-index: 2;
+  cursor: pointer;
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.4)); /* 어두운 배경에서도 잘 보이게 */
+  transition: transform 0.2s ease;
+}
+
+.bookmark-icon:hover {
+  transform: scale(1.2);
 }
