@@ -7,7 +7,7 @@ import {
 } from "../services/wishlist";
 import { fetchCourseById } from "../services/course";
 import { useApp } from "../components/AppContext"; // ✅ 로그인 상태 감지
-import "../assets/css/wishlist.css";
+import "../assets/css/Wishlist.css";
 
 export default function Wishlist() {
   const [items, setItems] = useState([]);
